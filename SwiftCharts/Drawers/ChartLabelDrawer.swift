@@ -84,6 +84,12 @@ open class ChartLabelDrawer: ChartContextDrawer {
             self.label.text.removeLast(3)
             
             self.label.text = "\(self.label.text)k"
+        }else if labelCount >= 1000000 {
+            //Init 'self.label'
+            self.label = label
+            self.label.text.removeLast(6)
+            
+            self.label.text = "\(self.label.text)m"
         }
         self.label = label
         self.screenLoc = screenLoc
