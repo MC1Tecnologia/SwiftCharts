@@ -77,19 +77,15 @@ open class ChartLabelDrawer: ChartContextDrawer {
     }
     
     public init(label: ChartAxisLabel, screenLoc: CGPoint) {
-        let labelCount = Int(label.text.description) ?? 0
-        if labelCount >= 1000 {
+        let numbertoToInt = Int(label.text.description) ?? 0
+        if numbertoToInt >= 1000 {
             //Init 'self.label'
             self.label = label
-            self.label.text.removeLast(3)
-            
-            self.label.text = "\(self.label.text)k"
-        }else if labelCount >= 1000000 {
+            self.label.text = numbertoToInt.abbreviated
+        }else if numbertoToInt >= 1000000 {
             //Init 'self.label'
             self.label = label
-            self.label.text.removeLast(6)
-            
-            self.label.text = "\(self.label.text)m"
+            self.label.text = numbertoToInt.abbreviated
         }
         self.label = label
         self.screenLoc = screenLoc
@@ -189,3 +185,14 @@ open class ChartLabelDrawer: ChartContextDrawer {
         attrStr.draw(at: CGPoint(x: x, y: y))
     }
 }
+extension Int {
+    var abbreviated: String {
+        let abbrev = "KMBTPE"
+        return abbrev.enumerated().reversed().reduce(nil as String?) { accum, tuple in
+            let factor = Double(self) / pow(10, Double(tuple.0 + 1) * 3)
+            let format = (factor.truncatingRemainder(dividingBy: 1)  == 0 ? "%.0f%@" : "%.1f%@")
+            return accum ?? (factor > 1 ? String(format: format, factor, String(tuple.1)) : nil)
+            } ?? String(self)
+    }
+}
+
