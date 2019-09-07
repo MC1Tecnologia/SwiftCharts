@@ -116,8 +116,8 @@ open class ChartPointViewBar: UIView {
     }
     
     func toggleSelection() {
-        isSelected = !isSelected
-        settings.selectionViewUpdater?.displaySelected(self, selected: isSelected)
+//        isSelected = !isSelected
+//        settings.selectionViewUpdater?.displaySelected(self, selected: isSelected)
     }
 
     required public init(coder aDecoder: NSCoder) {
